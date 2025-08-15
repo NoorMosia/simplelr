@@ -1,0 +1,9 @@
+"0","abline("
+"0","  a = b0_hat,"
+"0","  b = b1_hat,"
+"0","  col = ""red"","
+"0","  lwd = 2"
+"0",")"
+"2","Error in int_abline(a = a, b = b, h = h, v = v, untf = untf, ...) : 
+  plot.new has not been called yet
+"

@@ -1,0 +1,4 @@
+"0","r <- SS_xy / sqrt(SS_xx * SS_yy)"
+"0",""
+"0","#tests"
+"0","test <- (r * sqrt(df)) / sqrt(1-r^2)"

@@ -1,0 +1,17 @@
+{
+  "hash": "80e504564135437fb3e159139cfab4dd",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Textbook notes\"\nformat: html\n---\n\n\n# Chater 3: Simple linear regression\n\n## 3.1 & 3.2 - Introduction\nAn introduction and explanation of simple linear regression.\n\n## 3.3 - Fitting the model: Method of least squares\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nx <- c(1, 2, 3, 4, 5)\ny <- c(1, 1, 2, 2, 4)\n\nn <- length(x) #x and y have the same length so it will work either way\n\n# Calculating sums\nsum_x <- sum(x)\nsum_y <- sum(y)\nsum_x2 <- sum(x^2)\nsum_y2 <- sum(y^2)\nsum_xy <- sum(x*y) #same as sum of y*x\n\n# mean calculations\nx_bar <- mean(x)\ny_bar <- mean(y)\n\n# SS formulas\nSS_yy = sum_y2 - n * (y_bar)^2\nSS_xx = sum_x2 - n * (x_bar)^2\nSS_xy = sum_xy - n * x_bar * y_bar\n\n\n# Slope and intercept of least squares model(parameters)\nb1_hat <- SS_xy / SS_xx\nb0_hat <- y_bar - b1_hat * x_bar\n\n\n# draw scatter plot & add least squares line\nplot(\n  x, y, \n     main = \"Graph of x vs. y\",\n     xlab = \"x label\",\n     ylab = \"y label\",\n     pch = 19,\n     col = \"blue\"\n  )\n\nabline(\n  a = b0_hat,\n  b = b1_hat,\n  col = \"red\",\n  lwd = 2\n)\n```\n\n::: {.cell-output-display}\n![](chapter-3_files/figure-html/unnamed-chunk-1-1.png){width=672}\n:::\n:::\n\n\n\n\n## 3.4 - Model Assumptions\nNothing practical, just background theory.\n\n\n## 3.5 - An estimator of σ^2\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# predicted values\ny_hat <- b0_hat + b1_hat * x\nresiduals <- y - y_hat\nSSE <- sum(residuals^2)\n\n# calculating SSE using formula. Will give same answer as above\nsse = SS_yy - b1_hat * SS_xy\n\n#estimators\ns_squared = SSE / (n-2)\ns = sqrt(s_squared)\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\n# Coefficient of variation\nCV = 100 * (s / y_bar)\n```\n:::\n\n\n\n\n\n## 3.6 - Assessing the utility of the model\n### Making inferences about the slope β1\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# this part we normally get from t-distribution table, when working manually\nalpha <- 0.05\ndf <- n-2\n\nt_critical <- qt(1 - alpha/2, df)  # Equivalent to qt(0.975, df)\n# Or using lower.tail = FALSE:\nt_critical <- qt(alpha/2, df, lower.tail = FALSE)\n\n# using formula in the textbook\nt = b1_hat / (s / sqrt(SS_xx))\n\n# bounds for Confidence interval\nlower_bound <- b1_hat - (t_critical * (s / sqrt(SS_xx)))\nupper_bound <- b1_hat + (t_critical * (s / sqrt(SS_xx)))\n```\n:::\n\n\n\n\n## 3.7 - The coefficient of correlation\n\n\n::: {.cell}\n\n```{.r .cell-code}\nr <- SS_xy / sqrt(SS_xx * SS_yy)\n\n#tests\ntest <- (r * sqrt(df)) / sqrt(1-r^2)\n```\n:::\n\n\n\n## 3.8 - The coefficient of determination\n\n\n::: {.cell}\n\n```{.r .cell-code}\nr_squared <- r^2\n\n# using textbook formula\nr_sq <- 1 - (SSE / SS_yy)\n```\n:::\n",
+    "supporting": [
+      "chapter-3_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

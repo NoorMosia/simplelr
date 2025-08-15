@@ -1,0 +1,243 @@
+---
+title: "Basics"
+format: 
+  pdf: 
+    mainfont: Calibri
+    colorlinks: true
+---
+
+## Defining vectors
+
+```{r}
+x <- c(1, 2, 3, 4, 5)
+y <- c(1, 1, 2, 2, 4)
+
+n <- length(x) #x and y have the same length so it will work either way
+
+```
+
+```{r}
+#| echo: false
+cat("x values: ", x)
+cat("y values: ", y)
+cat("n(sample size): ", n)
+```
+
+## Sums
+
+```{r}
+sum_x <- sum(x)
+sum_y <- sum(y)
+
+sum_x2 <- sum(x^2)
+sum_y2 <- sum(y^2)
+
+sum_xy <- sum(x*y) #same as sum of y*x
+
+```
+
+```{r}
+#| echo: false
+cat("sum of x-values: ", sum_x)
+cat("sum of y-values: ", sum_y)
+cat("sum of x-values squared: ", sum_x2)
+cat("sum of y-values squared: ", sum_y2)
+cat("sum of x-values times y-values: ", sum_xy)
+```
+
+## Means
+
+```{r}
+x_bar <- mean(x)
+y_bar <- mean(y)
+
+```
+
+```{r}
+#| echo: false
+cat("x̄ : ", x_bar)
+cat("ȳ : ", y_bar)
+```
+
+
+
+## SS formulars
+
+```{r}
+SS_yy = sum_y2 - n * (y_bar)^2
+SS_xx = sum_x2 - n * (x_bar)^2
+SS_xy = sum_xy - n * x_bar * y_bar
+```
+
+```{r}
+#| echo: false
+cat("SSxx : ", SS_xx)
+cat("SSyy: ", SS_yy)
+cat("SSxy: ", SS_xy)
+```
+
+
+
+
+## Slope and Intercept of the least squares model
+
+```{r}
+b1_hat <- SS_xy / SS_xx
+
+b0_hat <- y_bar - b1_hat * x_bar
+
+```
+
+```{r}
+#| echo: false
+cat("b1 hat : ", b1_hat)
+cat("b0 hat: ", b0_hat)
+```
+
+
+
+## Scatter Plot
+
+```{r}
+plot(
+  x, y, 
+     main = "Graph of x vs. y",
+     xlab = "x label",
+     ylab = "y label",
+     pch = 19,
+     col = "blue"
+  )
+
+abline(
+  a = b0_hat,
+  b = b1_hat,
+  col = "red",
+  lwd = 2
+)
+```
+
+# Residual Analyses and Standard errors
+
+## Predicted values
+
+```{r}
+y_hat <- b0_hat + b1_hat * x
+
+```
+
+
+```{r}
+#| echo: false
+cat("y hat : ", y_hat)
+```
+
+
+
+
+## Residuals
+
+```{r}
+residuals <- y - y_hat
+
+SSE <- sum(residuals^2)
+```
+
+
+```{r}
+#| echo: false
+cat("Residuals : ", residuals)
+cat("SSE: ", SSE)
+```
+
+
+
+## Mean Squared Error
+
+```{r}
+k <- 2 #for the degrees of freedom
+
+MSE <- SSE / (n-k)
+```
+
+
+```{r}
+#| echo: false
+cat("MSE : ", MSE)
+```
+
+
+## Test statistic
+
+```{r}
+# Standard error of b1_hat
+SE_b1 <- sqrt(MSE / SS_xx)
+
+t <- (b1_hat - 0) / SE_b1
+```
+
+
+```{r}
+#| echo: false
+cat("SE b1 : ", SE_b1)
+cat("t: ", t)
+```
+
+
+
+## Correlation Coefficient
+
+```{r}
+r <- SS_xy / sqrt(SS_xx * SS_yy)
+
+```
+
+
+```{r}
+#| echo: false
+cat("r: ", r)
+```
+
+
+
+
+## Correlation of Determination
+
+```{r}
+r_squared <- r^2
+
+# using textbook formula
+r_sq <- 1 - (SSE / SS_yy)
+
+```
+
+
+```{r}
+#| echo: false
+cat("r squared : ", r_squared)
+cat("r squared(using textbook formula) : ", r_sq)
+```
+
+\newpage
+# Built in least squares method
+
+```{r}
+sample_model <- lm(y ~ x)
+
+print(summary(sample_model))
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
